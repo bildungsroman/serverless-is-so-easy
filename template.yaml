@@ -1,3 +1,648 @@
-AWSTemplateFormatVersion: '2010-09-09'
-Transform: 'AWS::Serverless-2016-10-31'
-Resources: {}
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  function30803A07:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function30803A07
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function30803A07
+      CodeUri: src/function30803A07
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table3BA2FE6E
+        - AWSLambdaENIManagementAccess
+      Events:
+        api4579B2CB:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+            RestApiId: !Ref api4579B2CB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table3BA2FE6E
+          TABLE_ARN: !GetAtt table3BA2FE6E.Arn
+      VpcConfig:
+        SecurityGroupIds:
+          - !GetAtt virtualNetwork7BB89571.DefaultSecurityGroup
+        SubnetIds:
+          - !Ref virtualNetwork7BB89571PrivateSubnet1
+          - !Ref virtualNetwork7BB89571PrivateSubnet2
+  api4579B2CB:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub
+        - ${ResourceName} From Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName}
+        - ResourceName: myAwesomeApi
+      StageName: !Ref StackeryEnvironmentAPIGatewayStageName
+      DefinitionBody:
+        swagger: '2.0'
+        info: {}
+        paths:
+          /:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function30803A07.Arn}/invocations
+              responses: {}
+          /user/{id}:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${functionBE52ACA0.Arn}/invocations
+              responses: {}
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function136B274.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function853D75C0.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${function2A59D4EE.Arn}/invocations
+              responses: {}
+      EndpointConfiguration: REGIONAL
+    Metadata:
+      StackeryName: myAwesomeApi
+  function136B274:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function136B274
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function136B274
+      CodeUri: src/function136B274
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table3BA2FE6E
+        - AWSLambdaENIManagementAccess
+      Events:
+        api4579B2CB:
+          Type: Api
+          Properties:
+            Path: /user/{id}
+            Method: PUT
+            RestApiId: !Ref api4579B2CB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table3BA2FE6E
+          TABLE_ARN: !GetAtt table3BA2FE6E.Arn
+      VpcConfig:
+        SecurityGroupIds:
+          - !GetAtt virtualNetwork7BB89571.DefaultSecurityGroup
+        SubnetIds:
+          - !Ref virtualNetwork7BB89571PrivateSubnet1
+          - !Ref virtualNetwork7BB89571PrivateSubnet2
+  functionBE52ACA0:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-functionBE52ACA0
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: functionBE52ACA0
+      CodeUri: src/functionBE52ACA0
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table3BA2FE6E
+        - AWSLambdaENIManagementAccess
+      Events:
+        api4579B2CB:
+          Type: Api
+          Properties:
+            Path: /user/{id}
+            Method: GET
+            RestApiId: !Ref api4579B2CB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table3BA2FE6E
+          TABLE_ARN: !GetAtt table3BA2FE6E.Arn
+      VpcConfig:
+        SecurityGroupIds:
+          - !GetAtt virtualNetwork7BB89571.DefaultSecurityGroup
+        SubnetIds:
+          - !Ref virtualNetwork7BB89571PrivateSubnet1
+          - !Ref virtualNetwork7BB89571PrivateSubnet2
+  function853D75C0:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function853D75C0
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function853D75C0
+      CodeUri: src/function853D75C0
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table3BA2FE6E
+        - AWSLambdaENIManagementAccess
+      Events:
+        api4579B2CB:
+          Type: Api
+          Properties:
+            Path: /user/{id}
+            Method: POST
+            RestApiId: !Ref api4579B2CB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table3BA2FE6E
+          TABLE_ARN: !GetAtt table3BA2FE6E.Arn
+      VpcConfig:
+        SecurityGroupIds:
+          - !GetAtt virtualNetwork7BB89571.DefaultSecurityGroup
+        SubnetIds:
+          - !Ref virtualNetwork7BB89571PrivateSubnet1
+          - !Ref virtualNetwork7BB89571PrivateSubnet2
+  function2A59D4EE:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AWS::StackName}-function2A59D4EE
+      Description: !Sub
+        - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Function ${ResourceName}
+        - ResourceName: function2A59D4EE
+      CodeUri: src/function2A59D4EE
+      Handler: index.handler
+      Runtime: nodejs8.10
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref table3BA2FE6E
+        - AWSLambdaENIManagementAccess
+      Events:
+        api4579B2CB:
+          Type: Api
+          Properties:
+            Path: /user/{id}
+            Method: DELETE
+            RestApiId: !Ref api4579B2CB
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref table3BA2FE6E
+          TABLE_ARN: !GetAtt table3BA2FE6E.Arn
+      VpcConfig:
+        SecurityGroupIds:
+          - !GetAtt virtualNetwork7BB89571.DefaultSecurityGroup
+        SubnetIds:
+          - !Ref virtualNetwork7BB89571PrivateSubnet1
+          - !Ref virtualNetwork7BB89571PrivateSubnet2
+  table3BA2FE6E:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TableName: !Sub ${AWS::StackName}-table3BA2FE6E
+    Metadata:
+      StackeryName: Users
+  virtualNetwork7BB89571:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName}
+            - ResourceName: virtualNetwork7BB89571
+  virtualNetwork7BB89571PrivateSubnet1:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select
+        - 0
+        - !GetAZs ''
+      CidrBlock: !Select
+        - 0
+        - !Cidr
+          - 10.0.0.0/16
+          - 4
+          - 14
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Private Subnet 1
+            - ResourceName: virtualNetwork7BB89571
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PrivateSubnet2:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select
+        - 1
+        - !GetAZs ''
+      CidrBlock: !Select
+        - 1
+        - !Cidr
+          - 10.0.0.0/16
+          - 4
+          - 14
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Private Subnet 2
+            - ResourceName: virtualNetwork7BB89571
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PublicSubnet1:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select
+        - 0
+        - !GetAZs ''
+      CidrBlock: !Select
+        - 2
+        - !Cidr
+          - 10.0.0.0/16
+          - 4
+          - 14
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Public Subnet 1
+            - ResourceName: virtualNetwork7BB89571
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PublicSubnet2:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select
+        - 1
+        - !GetAZs ''
+      CidrBlock: !Select
+        - 3
+        - !Cidr
+          - 10.0.0.0/16
+          - 4
+          - 14
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Public Subnet 2
+            - ResourceName: virtualNetwork7BB89571
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PrivateSubnet1NatGatewayEIP:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+  virtualNetwork7BB89571PrivateSubnet1NatGateway:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt virtualNetwork7BB89571PrivateSubnet1NatGatewayEIP.AllocationId
+      SubnetId: !Ref virtualNetwork7BB89571PublicSubnet1
+  virtualNetwork7BB89571PrivateSubnet1RouteTable:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Private Subnet 1 Route Table
+            - ResourceName: virtualNetwork7BB89571
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PrivateSubnet1NatGatewayRoute:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref virtualNetwork7BB89571PrivateSubnet1NatGateway
+      RouteTableId: !Ref virtualNetwork7BB89571PrivateSubnet1RouteTable
+  virtualNetwork7BB89571PrivateSubnet1RouteTableAssociation:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref virtualNetwork7BB89571PrivateSubnet1RouteTable
+      SubnetId: !Ref virtualNetwork7BB89571PrivateSubnet1
+  virtualNetwork7BB89571PrivateSubnet2NatGatewayEIP:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+  virtualNetwork7BB89571PrivateSubnet2NatGateway:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt virtualNetwork7BB89571PrivateSubnet2NatGatewayEIP.AllocationId
+      SubnetId: !Ref virtualNetwork7BB89571PublicSubnet2
+  virtualNetwork7BB89571PrivateSubnet2RouteTable:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Private Subnet 2 Route Table
+            - ResourceName: virtualNetwork7BB89571
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PrivateSubnet2NatGatewayRoute:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref virtualNetwork7BB89571PrivateSubnet2NatGateway
+      RouteTableId: !Ref virtualNetwork7BB89571PrivateSubnet2RouteTable
+  virtualNetwork7BB89571PrivateSubnet2RouteTableAssociation:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref virtualNetwork7BB89571PrivateSubnet2RouteTable
+      SubnetId: !Ref virtualNetwork7BB89571PrivateSubnet2
+  virtualNetwork7BB89571PublicSubnetsInternetGateway:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Public Subnets Internet Gateway
+            - ResourceName: virtualNetwork7BB89571
+  virtualNetwork7BB89571PublicSubnetsInternetGatewayAttachment:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref virtualNetwork7BB89571PublicSubnetsInternetGateway
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PublicSubnetsRouteTable:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::RouteTable
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Virtual Network ${ResourceName} Public Subnets Route Table
+            - ResourceName: virtualNetwork7BB89571
+      VpcId: !Ref virtualNetwork7BB89571
+  virtualNetwork7BB89571PublicSubnetsInternetGatewayRoute:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::Route
+    Properties:
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref virtualNetwork7BB89571PublicSubnetsInternetGateway
+      RouteTableId: !Ref virtualNetwork7BB89571PublicSubnetsRouteTable
+  virtualNetwork7BB89571PublicSubnet1RouteTableAssociation:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref virtualNetwork7BB89571PublicSubnetsRouteTable
+      SubnetId: !Ref virtualNetwork7BB89571PublicSubnet1
+  virtualNetwork7BB89571PublicSubnet2RouteTableAssociation:
+    Metadata:
+      StackeryManaged: true
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref virtualNetwork7BB89571PublicSubnetsRouteTable
+      SubnetId: !Ref virtualNetwork7BB89571PublicSubnet2
+  bastion1EC25E4B:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Metadata:
+      StackeryType: bastion
+      StackeryName: myBastion
+    Properties:
+      LaunchConfigurationName: !Ref bastion1EC25E4BLaunchConfiguration
+      MaxSize: 2
+      MinSize: 1
+      DesiredCapacity: 1
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Bastion ${ResourceName} Instance
+            - ResourceName: myBastion
+          PropagateAtLaunch: true
+      VPCZoneIdentifier:
+        - !Ref virtualNetwork7BB89571PublicSubnet1
+        - !Ref virtualNetwork7BB89571PublicSubnet2
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MinInstancesInService: 1
+  bastion1EC25E4BIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          Effect: Allow
+          Principal:
+            Service: ec2.amazonaws.com
+          Action: sts:AssumeRole
+      RoleName: !Sub ${AWS::StackName}-bastion1EC25E4B
+      Policies:
+        - PolicyName: BastionPermissions
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - cloudwatch:PutMetricData
+                  - cloudwatch:GetMetricStatistics
+                  - cloudwatch:ListMetrics
+                  - ec2:DescribeTags
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:DescribeLogStreams
+                  - logs:PutLogEvents
+                Resource:
+                  - arn:aws:logs:*:*:log-group:/stackery/bastion/*
+                  - arn:aws:logs:*:*:log-group:/stackery/bastion/*:log-stream:*
+  bastion1EC25E4BIAMInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref bastion1EC25E4BIAMRole
+  bastion1EC25E4BInstancesSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Bastion Instances Security Group
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: '-1'
+      Tags:
+        - Key: Name
+          Value: !Sub
+            - Stackery Stack ${StackeryStackTagName} Environment ${StackeryEnvironmentTagName} Bastion ${ResourceName} Instances Security Group
+            - ResourceName: myBastion
+      VpcId: !Ref virtualNetwork7BB89571
+  bastion1EC25E4BLaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      IamInstanceProfile: !Ref bastion1EC25E4BIAMInstanceProfile
+      ImageId: !Ref AmazonLinux2ImageId
+      InstanceType: t2.nano
+      SecurityGroups:
+        - !Ref bastion1EC25E4BInstancesSecurityGroup
+      UserData: !Base64
+        Fn::Sub:
+          - |-
+            Content-Type: multipart/mixed; boundary="==BOUNDARY=="
+            MIME-Version: 1.0
+
+            --==BOUNDARY==
+            MIME-Version: 1.0
+            Content-Type: text/x-shellscript
+
+            #!/bin/bash
+            # Install awslogs, the jq JSON parser, and cfn-signal stuff
+            yum install -y awslogs jq
+
+            # Inject the CloudWatch Logs configuration file contents
+            cat > /etc/awslogs/awslogs.conf <<- EOF
+            [general]
+            state_file = /var/lib/awslogs/agent-state
+
+            [/var/log/dmesg]
+            file = /var/log/dmesg
+            log_group_name = /stackery/bastion/stackery-${AWS::StackName}-bastion1EC25E4B/dmesg
+            log_stream_name = {instance_id}
+
+            [/var/log/messages]
+            file = /var/log/messages
+            log_group_name = /stackery/bastion/stackery-${AWS::StackName}-bastion1EC25E4B/messages
+            log_stream_name = {instance_id}
+            datetime_format = %b %d %H:%M:%S
+
+            [/var/log/secure]
+            file = /var/log/secure
+            log_group_name = /stackery/bastion/stackery-${AWS::StackName}-bastion1EC25E4B/secure
+            log_stream_name = {instance_id}
+
+            [/var/log/auth.log]
+            file = /var/log/auth.log
+            log_group_name = /stackery/bastion/stackery-${AWS::StackName}-bastion1EC25E4B/auth.log
+            log_stream_name = {instance_id}
+
+            EOF
+
+            exec 2>>/var/log/cloudwatch-logs-start.log
+            set -x
+
+            # Grab the instance id ARN from instance metadata
+            instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+
+            # Replace the instance ID placeholders with the actual values
+            sed -i -e "s/{instance_id}/$instance_id/g" /etc/awslogs/awslogs.conf
+
+            service awslogs start
+            chkconfig awslogs on
+
+            ########################################################################
+            # Create user logins and add their ssh key
+            ########################################################################
+            echo '${SSHKeys}' > ~ec2-user/users.json
+            filename="user.keys"
+            jq -r 'to_entries[] | "\(.key) \(.value)"' ~ec2-user/users.json > "$filename"
+
+            while read -r user key
+            do
+              echo "Adding user: $user"
+              useradd -m $user
+              homedir=$( getent passwd "$user" | cut -d: -f6 )
+              cd $homedir
+              mkdir .ssh
+              chmod 700 .ssh
+              chown $user:$user .ssh
+              echo "$key" >> .ssh/authorized_keys
+              chmod 600 .ssh/authorized_keys
+              chown $user:$user .ssh/authorized_keys
+
+            done < "$filename"
+
+            rm "$filename"
+            rm ~ec2-user/users.json
+
+            --==BOUNDARY==
+            MIME-Version: 1.0
+            Content-Type: text/x-shellscript
+
+            #!/bin/bash
+            # Set the region to send CloudWatch Logs data to (the region where the instance is located)
+            region=$(curl 169.254.169.254/latest/meta-data/placement/availability-zone | sed s'/.$//')
+            sed -i -e "s/region = us-east-1/region = $region/g" /etc/awslogs/awscli.conf
+
+            --==BOUNDARY==
+          - SSHKeys: '{"<username1>":"<public key>","<username2>":"<public key>"}'
+Parameters:
+  StackeryStackTagName:
+    Type: String
+    Description: Stack Name (injected by Stackery at deployment time)
+  StackeryEnvironmentTagName:
+    Type: String
+    Description: Environment Name (injected by Stackery at deployment time)
+  StackeryEnvironmentAPIGatewayStageName:
+    Type: String
+    Description: Environment name used for API Gateway Stage names (injected by Stackery at deployment time)
+  AmazonLinux2ImageId:
+    Type: AWS::EC2::Image::Id
+    Description: Latest Amazon Linux 2 AMI ID (injected by Stackery at deployment time)
